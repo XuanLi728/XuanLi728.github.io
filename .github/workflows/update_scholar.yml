@@ -1,0 +1,59 @@
+name: Update Scholar Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
+      SCHOLAR_SELF_NAME: Xuan Li
+      MAX_PUBLICATIONS: '20'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        if: env.GOOGLE_SCHOLAR_ID != ''
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install crawler dependencies
+        if: env.GOOGLE_SCHOLAR_ID != ''
+        run: pip install -r google_scholar_crawler/requirements.txt
+
+      - name: Fetch scholar metadata
+        if: env.GOOGLE_SCHOLAR_ID != ''
+        run: python google_scholar_crawler/main.py
+
+      - name: Export publications for homepage
+        if: env.GOOGLE_SCHOLAR_ID != ''
+        run: python google_scholar_crawler/export_publications.py
+
+      - name: Upload gs_data to google-scholar-stats branch
+        if: env.GOOGLE_SCHOLAR_ID != ''
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: google-scholar-stats
+          publish_dir: ./google_scholar_crawler/results
+          force_orphan: true
+
+      - name: Commit publications data to main branch
+        if: env.GOOGLE_SCHOLAR_ID != ''
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: _data/publications_auto.json
+          default_author: github_actions
+          message: 'chore: auto-update scholar publications data [skip ci]'
+
+      - name: Skip when scholar secret missing
+        if: env.GOOGLE_SCHOLAR_ID == ''
+        run: echo 'GOOGLE_SCHOLAR_ID is not set. Skipping update.'

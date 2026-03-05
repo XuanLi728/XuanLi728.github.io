@@ -1,0 +1,270 @@
+/* ================= CSS 变量 (轻松换肤) ================= */
+:root {
+    /* 核心颜色 */
+    --primary-color: #0066cc;       /* 链接颜色 */
+    --primary-hover: #004499;       /* 链接悬停颜色 */
+    --text-main: #222222;           /* 主要文字 (接近纯黑但柔和) */
+    --text-secondary: #555555;      /* 次要文字 (简介、作者) */
+    --text-light: #888888;          /* 辅助文字 (日期、页脚) */
+    --bg-color: #ffffff;
+    
+    /* 徽章颜色 */
+    --badge-neurips: #a31f34;
+    --badge-icml: #0056b3;
+    --badge-iclr: #2e7d32;
+    --badge-generic: #666666;
+    
+    /* 间距 */
+    --section-gap: 50px;
+    --item-gap: 30px;
+}
+
+/* ================= 全局重置 ================= */
+html {
+    background-color: var(--bg-color);
+}
+
+body {
+    /* 使用现代字体栈：优先 Inter, 其次系统字体 */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.65; /* 略微增加行高，提升阅读感 */
+    color: var(--text-main);
+    background-color: var(--bg-color);
+    max-width: 900px; /* 限制最大宽度，阅读体验最佳 */
+    margin: 0 auto;
+    padding: 60px 24px;
+    -webkit-font-smoothing: antialiased; /* 字体抗锯齿，更清晰 */
+}
+
+/* 链接样式 - 去掉下划线，更干净 */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline; /* 仅在悬停时显示下划线 */
+}
+
+/* ================= 标题系统 ================= */
+h1, h2, h3 {
+    color: #111;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2.6em;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-top: var(--section-gap);
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eeeeee; /* 极细的分割线 */
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.2em;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+/* ================= 头部布局 (Header) ================= */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 垂直居中 */
+    gap: 60px;
+    margin-bottom: 60px;
+}
+
+.header-text {
+    flex: 1;
+}
+
+/* 联系方式栏 */
+.contact-links {
+    margin: 15px 0;
+    font-weight: 500;
+    font-size: 1.05em;
+}
+.contact-links .sep {
+    margin: 0 6px;
+    color: #ccc;
+}
+
+.email-text {
+    font-family: 'SF Mono', Consolas, monospace; /* 邮箱用等宽字体 */
+    color: var(--text-secondary);
+    font-size: 0.95em;
+    background: #f4f4f4;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* 头像样式 */
+.header-photo img {
+    width: 220px;
+    height: 220px; /* 强制正方形或根据比例 */
+    border-radius: 12px; /* 更圆润的角 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* 极柔和的高级阴影 */
+    object-fit: cover;
+    display: block;
+}
+
+/* ================= News 板块 ================= */
+.news-list {
+    padding-left: 0;
+    list-style: none;
+}
+.news-list li {
+    margin-bottom: 12px;
+}
+.news-list .date {
+    font-family: monospace;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-right: 10px;
+}
+
+/* ================= 论文列表 (Paper List) ================= */
+.paper-item {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 40px; /* 增加项目间距 */
+}
+
+.paper-thumb {
+    flex-shrink: 0;
+    width: 180px; /* 稍微加宽 */
+    padding-top: 5px; /* 对齐微调 */
+}
+
+.paper-thumb img {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+.paper-thumb img:hover {
+    transform: translateY(-2px); /* 悬停微动特效 */
+}
+
+.paper-info {
+    flex: 1;
+}
+
+.paper-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+.paper-title a {
+    color: #000; /* 标题默认黑色 */
+}
+.paper-title a:hover {
+    color: var(--primary-color); /* 悬停变蓝 */
+}
+
+.paper-authors {
+    color: var(--text-secondary);
+    font-size: 0.95em;
+    margin-bottom: 6px;
+}
+
+.paper-desc {
+    font-size: 0.95em;
+    color: var(--text-secondary);
+    font-style: italic; /* 斜体描述 */
+    margin-bottom: 6px;
+}
+
+.paper-links {
+    font-size: 0.9em;
+    font-weight: 600;
+}
+.paper-links a {
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+/* ================= 会议徽章 ================= */
+.conf-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-right: 6px;
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+.neurips { background-color: var(--badge-neurips); }
+.icml { background-color: var(--badge-icml); }
+.iclr { background-color: var(--badge-iclr); }
+.generic { background-color: var(--badge-generic); }
+
+/* ================= 页脚 & 移动端 ================= */
+#footer {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    color: var(--text-light);
+    font-size: 0.85em;
+    text-align: center;
+}
+
+/* 简单的列表 */
+ul.simple-list {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    body { padding: 30px 20px; }
+    
+    .header-container {
+        flex-direction: column-reverse; /* 手机上照片在上，文字在下 */
+        text-align: left;
+        gap: 30px;
+        align-items: flex-start;
+    }
+    
+    .header-photo img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .paper-item {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .paper-thumb {
+        width: 100%;
+        max-width: 250px;
+    }
+}
